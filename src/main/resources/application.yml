@@ -1,4 +1,3 @@
-spring.application.name: gerencia-funcionario
 
 server:
   servlet:
@@ -8,7 +7,7 @@ spring:
   data:
     mongodb:
       authentication-database: admin
-      uri: ${MONGO_DB_URI:mongodb+srv://produdoroDevUser:8iN1yCBRKXMRZa1A@cluster0.bbnoj.mongodb.net/produdoroDevDB?retryWrites=true&w=majority}
+      uri: ${MONGO_DB_URI:mongodb+srv://liwdev23:W945766on@cluster0.peh5zhp.mongodb.net/Cluster0?retryWrites=true&w=majority&appName=Cluster0}
       auto-index-creation: true
 
 springdoc:
