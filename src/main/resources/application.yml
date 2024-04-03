@@ -1,0 +1,16 @@
+
+server:
+  servlet:
+    context-path: /gerencia-funcionario/api
+
+spring:
+  data:
+    mongodb:
+      authentication-database: admin
+      uri: ${MONGO_DB_URI:mongodb+srv://liwdev23:W945766on@cluster0.peh5zhp.mongodb.net/Cluster0?retryWrites=true&w=majority&appName=Cluster0}
+      auto-index-creation: true
+
+springdoc:
+  swagger-ui:
+    path: /public/swagger
+
