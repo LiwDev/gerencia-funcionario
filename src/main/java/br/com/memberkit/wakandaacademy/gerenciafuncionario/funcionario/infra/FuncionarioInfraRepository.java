@@ -14,7 +14,7 @@ import java.util.Arrays;
 @Repository
 @RequiredArgsConstructor
 public class FuncionarioInfraRepository implements FuncionarioRepository {
-    private FuncionarioSpringMongoDBRepository funcionarioSpringMongoDBRepository;
+    private final FuncionarioSpringMongoDBRepository funcionarioSpringMongoDBRepository;
 
     @Override
     public Funcionario salva(Funcionario funcionario) {

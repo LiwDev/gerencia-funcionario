@@ -4,10 +4,12 @@ import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.domain.En
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.domain.Funcionario;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 import lombok.Value;
 import org.springframework.data.annotation.Id;
 
 import java.util.UUID;
+
 @Value
 public class FuncionarioResponse {
 

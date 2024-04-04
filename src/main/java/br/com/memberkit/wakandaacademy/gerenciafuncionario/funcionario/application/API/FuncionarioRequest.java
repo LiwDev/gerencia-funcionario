@@ -13,7 +13,6 @@ public class FuncionarioRequest {
     private String nome;
     private String Designacao;
     private String telefone;
-    @NotBlank
-    @Size(message = "Campo endereço do funcionario não pode estar vazio", max = 255, min = 3)
+
     private Endereco endereco;
 }
