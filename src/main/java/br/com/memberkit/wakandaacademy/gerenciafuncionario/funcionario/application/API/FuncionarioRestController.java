@@ -45,9 +45,9 @@ public class FuncionarioRestController implements FuncionarioAPI {
 
     @Override
     public Optional<FuncionarioResponse> atualizaFuncionario(UUID idFuncionario, FuncionarioRequest funcionario) {
-        Optional<FuncionarioResponse> funcionarioResponse = funcionarioService.atualizaFuncionario(idFuncionario,funcionario);
-        return funcionarioResponse;
+        log.info("[incia] - -FuncionarioRestController - atualizaFuncionario");
+
+        return funcionarioService.atualizaFuncionario(idFuncionario, funcionario);
+
     }
-
-
 }
