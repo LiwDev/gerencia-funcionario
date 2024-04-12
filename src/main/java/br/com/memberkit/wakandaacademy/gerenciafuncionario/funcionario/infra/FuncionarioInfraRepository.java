@@ -71,15 +71,20 @@ public class FuncionarioInfraRepository implements FuncionarioRepository {
             }
             if (funcionario.getDesignacao() != null && !funcionario.getDesignacao().isBlank())
                 existingFuncionario.setDesignacao(funcionario.getDesignacao());
-
-            if (funcionario.getEndereco().getCep() != null && !funcionario.getEndereco().getCep().isBlank())
-                existingFuncionario.getEndereco().setCep(funcionario.getEndereco().getCep());
-            if (funcionario.getEndereco().getCidade() != null && !funcionario.getEndereco().getCidade().isBlank())
-                existingFuncionario.getEndereco().setCidade(funcionario.getEndereco().getCidade());
-            if (funcionario.getEndereco().getRua() != null && !funcionario.getEndereco().getRua().isBlank())
-                existingFuncionario.getEndereco().setRua(funcionario.getEndereco().getRua());
-            if (funcionario.getEndereco().getEstado() != null && !funcionario.getEndereco().getEstado().isBlank())
-                existingFuncionario.getEndereco().setEstado(funcionario.getEndereco().getEstado());
+            if (funcionario.getEndereco() != null) {
+                if (funcionario.getEndereco().getCep() != null && !funcionario.getEndereco().getCep().isBlank()) {
+                    existingFuncionario.getEndereco().setCep(funcionario.getEndereco().getCep());
+                }
+                if (funcionario.getEndereco().getCidade() != null && !funcionario.getEndereco().getCidade().isBlank()) {
+                    existingFuncionario.getEndereco().setCidade(funcionario.getEndereco().getCidade());
+                }
+                if (funcionario.getEndereco().getRua() != null && !funcionario.getEndereco().getRua().isBlank()) {
+                    existingFuncionario.getEndereco().setRua(funcionario.getEndereco().getRua());
+                }
+                if (funcionario.getEndereco().getEstado() != null && !funcionario.getEndereco().getEstado().isBlank()) {
+                    existingFuncionario.getEndereco().setEstado(funcionario.getEndereco().getEstado());
+                }
+            }
             log.info("[existingFuncionario-encontrado] - -funcionarioSpringMongoDBRepository - findById ");
 
 
