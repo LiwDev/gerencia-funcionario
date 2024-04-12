@@ -1,5 +1,6 @@
 package br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.infra;
 
+import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.application.API.FuncionarioRequest;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.application.API.FuncionarioResponse;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.application.repository.FuncionarioRepository;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.domain.Funcionario;
@@ -56,8 +57,7 @@ public class FuncionarioInfraRepository implements FuncionarioRepository {
 
     @Override
     public void atualizaFuncionario(UUID idFuncionario, FuncionarioResponse funcionario) {
-
-
+        log.info("[incia] - -FuncionarioSpringMongoDBRepository - atualizaFuncionario");
         try {
             log.info("[incia] - -FuncionarioSpringMongoDBRepository - atualizaFuncionario");
             Funcionario existingFuncionario = funcionarioSpringMongoDBRepository.findById(idFuncionario).get();
@@ -72,15 +72,15 @@ public class FuncionarioInfraRepository implements FuncionarioRepository {
             if (funcionario.getDesignacao() != null && !funcionario.getDesignacao().isBlank())
                 existingFuncionario.setDesignacao(funcionario.getDesignacao());
 
-            if (funcionario.getEndereco().getCep() != null && !funcionario.getEndereco().getCep().isEmpty())
+            if (funcionario.getEndereco().getCep() != null && !funcionario.getEndereco().getCep().isBlank())
                 existingFuncionario.getEndereco().setCep(funcionario.getEndereco().getCep());
-            if (funcionario.getEndereco().getCidade() != null && !funcionario.getEndereco().getCidade().isEmpty())
+            if (funcionario.getEndereco().getCidade() != null && !funcionario.getEndereco().getCidade().isBlank())
                 existingFuncionario.getEndereco().setCidade(funcionario.getEndereco().getCidade());
-            if (funcionario.getEndereco().getRua() != null && !funcionario.getEndereco().getRua().isEmpty())
+            if (funcionario.getEndereco().getRua() != null && !funcionario.getEndereco().getRua().isBlank())
                 existingFuncionario.getEndereco().setRua(funcionario.getEndereco().getRua());
-            if (funcionario.getEndereco().getEstado() != null && !funcionario.getEndereco().getEstado().isEmpty())
+            if (funcionario.getEndereco().getEstado() != null && !funcionario.getEndereco().getEstado().isBlank())
                 existingFuncionario.getEndereco().setEstado(funcionario.getEndereco().getEstado());
-            log.info("[existingFuncionario-encontrado] - -funcionarioSpringMongoDBRepository - findById " + !funcionario.getNome().isEmpty());
+            log.info("[existingFuncionario-encontrado] - -funcionarioSpringMongoDBRepository - findById ");
 
 
             funcionarioSpringMongoDBRepository.save(existingFuncionario);
