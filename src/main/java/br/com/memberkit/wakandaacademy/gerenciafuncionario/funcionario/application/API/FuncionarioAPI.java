@@ -15,6 +15,7 @@ public interface FuncionarioAPI {
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     Funcionario postNovoFuncionario(@RequestBody @Valid FuncionarioRequest funcionarioRequest);
+
     @GetMapping("/lista-funcionario/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     Optional<Funcionario> getFuncionarioPorId(@Valid @PathVariable("id") UUID id);
@@ -26,4 +27,8 @@ public interface FuncionarioAPI {
     @PatchMapping("atualiza-funcionario/{idFuncionario}")
     @ResponseStatus(code = HttpStatus.OK)
     Optional<FuncionarioResponse> atualizaFuncionario(@PathVariable("idFuncionario") UUID idFuncionario, @RequestBody FuncionarioRequest funcionario);
+
+    @DeleteMapping("/deleta-funcionario/{idFuncionario}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    void deletaFuncionario(@PathVariable("idFuncionario")  UUID idFuncionario );
 }

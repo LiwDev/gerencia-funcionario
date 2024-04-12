@@ -47,7 +47,16 @@ public class FuncionarioApplicationService implements FuncionarioService{
 
     @Override
     public Optional<FuncionarioResponse> atualizaFuncionario(UUID idFuncionario, FuncionarioRequest funcionario) {
+        log.info("[incia] - -FuncionarioApplicationService - atualizaFuncionario");
         funcionarioRepository.atualizaFuncionario(idFuncionario,new FuncionarioResponse(funcionario));
+        log.info("[finaliza] - -FuncionarioApplicationService - atualizaFuncionario");
         return Optional.of(new FuncionarioResponse(funcionario));
+    }
+
+    @Override
+    public void deletaFuncionario(UUID idFuncionario) {
+        log.info("[incia] - -FuncionarioApplicationService - deletaFuncionario");
+        funcionarioRepository.deletaFuncionario(idFuncionario);
+        log.info("[finaliza] - -FuncionarioApplicationService - deletaFuncionario");
     }
 }

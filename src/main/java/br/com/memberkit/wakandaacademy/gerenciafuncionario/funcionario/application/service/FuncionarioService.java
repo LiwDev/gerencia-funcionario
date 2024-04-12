@@ -16,4 +16,6 @@ public interface FuncionarioService {
     List<Funcionario> buscaFuncionario( );
 
     Optional<FuncionarioResponse> atualizaFuncionario(UUID idFuncionario, FuncionarioRequest funcionario);
+
+    void deletaFuncionario(UUID idFuncionario);
 }

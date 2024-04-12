@@ -50,4 +50,11 @@ public class FuncionarioRestController implements FuncionarioAPI {
         return funcionarioService.atualizaFuncionario(idFuncionario, funcionario);
 
     }
+
+    @Override
+    public void deletaFuncionario(UUID idFuncionario) {
+        log.info("[incia] - -FuncionarioRestController - deletaFuncionario");
+        funcionarioService.deletaFuncionario(idFuncionario);
+        log.info("[finaliza] - -FuncionarioRestController - deletaFuncionario");
+    }
 }

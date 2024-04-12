@@ -92,5 +92,13 @@ public class FuncionarioInfraRepository implements FuncionarioRepository {
 
     }
 
+    @Override
+    public void deletaFuncionario(UUID idFuncionario) {
+        log.info("[incia] - -FuncionarioSpringMongoDBRepository - deletaFuncionario");
+        Funcionario funcionario = funcionarioSpringMongoDBRepository.findById(idFuncionario).get();
+        funcionarioSpringMongoDBRepository.delete(funcionario);
+        log.info("[finaliza] - -FuncionarioSpringMongoDBRepository - deletaFuncionario");
+    }
+
 
 }
