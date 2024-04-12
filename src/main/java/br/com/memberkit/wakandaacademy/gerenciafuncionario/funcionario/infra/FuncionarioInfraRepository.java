@@ -7,10 +7,13 @@ import br.com.memberkit.wakandaacademy.gerenciafuncionario.handler.ApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,6 +23,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FuncionarioInfraRepository implements FuncionarioRepository {
     private final FuncionarioSpringMongoDBRepository funcionarioSpringMongoDBRepository;
+
 
     @Override
     public Funcionario salva(Funcionario funcionario) {
@@ -35,19 +39,58 @@ public class FuncionarioInfraRepository implements FuncionarioRepository {
     }
 
     @Override
-    public Optional<Funcionario> buscaFuncionarioPorId(UUID id, Funcionario funcionario) {
+    public Optional<Funcionario> buscaFuncionarioPorId(UUID id) {
         log.info("[incia] - -FuncionarioSpringMongoDBRepository - buscaFuncionarioPorId");
         Optional<Funcionario> funcionarioResponse = funcionarioSpringMongoDBRepository.findById(id);
         log.info("[finaliza] - -FuncionarioSpringMongoDBRepository - buscaFuncionarioPorId");
-      return funcionarioResponse;
+        return funcionarioResponse;
     }
 
     @Override
-    public List<Funcionario> buscaFuncionario(Funcionario funcionario) {
+    public List<Funcionario> buscaFuncionario() {
         log.info("[incia] - -FuncionarioSpringMongoDBRepository - buscaFuncionario");
         List<Funcionario> listaFuncionario = funcionarioSpringMongoDBRepository.findAll();
         log.info("[finaliza] - -FuncionarioSpringMongoDBRepository - buscaFuncionario");
-   return listaFuncionario;
+        return listaFuncionario;
     }
+
+    @Override
+    public void atualizaFuncionario(UUID idFuncionario, FuncionarioResponse funcionario) {
+
+
+        try {
+            log.info("[incia] - -FuncionarioSpringMongoDBRepository - atualizaFuncionario");
+            Funcionario existingFuncionario = funcionarioSpringMongoDBRepository.findById(idFuncionario).get();
+            log.info("[existingFuncionario] - -funcionarioSpringMongoDBRepository - findById");
+
+            if (funcionario.getNome() != null && !funcionario.getNome().isBlank()) {
+                existingFuncionario.setNome(funcionario.getNome());
+            }
+            if (funcionario.getTelefone() != null && !funcionario.getTelefone().isBlank()) {
+                existingFuncionario.setTelefone(funcionario.getTelefone());
+            }
+            if (funcionario.getDesignacao() != null && !funcionario.getDesignacao().isBlank())
+                existingFuncionario.setDesignacao(funcionario.getDesignacao());
+
+            if (funcionario.getEndereco().getCep() != null && !funcionario.getEndereco().getCep().isEmpty())
+                existingFuncionario.getEndereco().setCep(funcionario.getEndereco().getCep());
+            if (funcionario.getEndereco().getCidade() != null && !funcionario.getEndereco().getCidade().isEmpty())
+                existingFuncionario.getEndereco().setCidade(funcionario.getEndereco().getCidade());
+            if (funcionario.getEndereco().getRua() != null && !funcionario.getEndereco().getRua().isEmpty())
+                existingFuncionario.getEndereco().setRua(funcionario.getEndereco().getRua());
+            if (funcionario.getEndereco().getEstado() != null && !funcionario.getEndereco().getEstado().isEmpty())
+                existingFuncionario.getEndereco().setEstado(funcionario.getEndereco().getEstado());
+            log.info("[existingFuncionario-encontrado] - -funcionarioSpringMongoDBRepository - findById " + !funcionario.getNome().isEmpty());
+
+
+            funcionarioSpringMongoDBRepository.save(existingFuncionario);
+            log.info("[finaliza] - -FuncionarioSpringMongoDBRepository - atualizaFuncionario");
+        } catch
+        (Exception exception) {
+            throw ApiException.build(HttpStatus.BAD_REQUEST, "error ao atualizar funcionario", exception);
+        }
+
+    }
+
 
 }

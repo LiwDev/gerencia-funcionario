@@ -4,8 +4,11 @@ import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.applicati
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.application.API.FuncionarioResponse;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.application.repository.FuncionarioRepository;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.domain.Funcionario;
+import br.com.memberkit.wakandaacademy.gerenciafuncionario.handler.ApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,18 +30,24 @@ public class FuncionarioApplicationService implements FuncionarioService{
     }
 
     @Override
-    public  Optional<Funcionario> buscaFuncionarioPorId(UUID id, Funcionario funcionario) {
+    public  Optional<Funcionario> buscaFuncionarioPorId(UUID id) {
         log.info("[incia] - -FuncionarioApplicationService - buscaFuncionarioPorId");
-        Optional<Funcionario> funcionarioPorId =   funcionarioRepository.buscaFuncionarioPorId(id,funcionario);
+        Optional<Funcionario> funcionarioPorId =   funcionarioRepository.buscaFuncionarioPorId(id);
         log.info("[finaliza] - -FuncionarioApplicationService - buscaFuncionarioPorId");
         return funcionarioPorId;
     }
 
     @Override
-    public List<Funcionario> buscaFuncionario(Funcionario funcionario) {
+    public List<Funcionario> buscaFuncionario() {
         log.info("[incia] - -FuncionarioApplicationService - buscaFuncionario");
-        List<Funcionario> listaFuncionario = funcionarioRepository.buscaFuncionario(funcionario);
+        List<Funcionario> listaFuncionario = funcionarioRepository.buscaFuncionario();
         log.info("[finaliza] - -FuncionarioApplicationService - buscaFuncionario");
         return  listaFuncionario;
+    }
+
+    @Override
+    public Optional<FuncionarioResponse> atualizaFuncionario(UUID idFuncionario, FuncionarioRequest funcionario) {
+        funcionarioRepository.atualizaFuncionario(idFuncionario,new FuncionarioResponse(funcionario));
+        return Optional.of(new FuncionarioResponse(funcionario));
     }
 }

@@ -28,18 +28,26 @@ public class FuncionarioRestController implements FuncionarioAPI {
     }
 
     @Override
-    public Optional<Funcionario> getFuncionarioPorId(UUID id, Funcionario funcionario) {
+    public Optional<Funcionario> getFuncionarioPorId(UUID id) {
         log.info("[incia] - -FuncionarioRestController - getFuncionarioPorId");
-        Optional<Funcionario> funcionarioPorId = funcionarioService.buscaFuncionarioPorId(id, funcionario);
+        Optional<Funcionario> funcionarioPorId = funcionarioService.buscaFuncionarioPorId(id);
         log.info("[finaliza] - -FuncionarioRestController - getFuncionarioPorId");
         return funcionarioPorId;
     }
 
     @Override
-    public List<Funcionario> buscaFuncionario(Funcionario funcionario) {
+    public List<Funcionario> buscaFuncionario() {
         log.info("[incia] - -FuncionarioRestController - getFuncionario");
-        List<Funcionario> listaFuncionario = funcionarioService.buscaFuncionario(funcionario);
+        List<Funcionario> listaFuncionario = funcionarioService.buscaFuncionario();
         log.info("[finaliza] - -FuncionarioRestController - getFuncionario");
         return listaFuncionario;
     }
+
+    @Override
+    public Optional<FuncionarioResponse> atualizaFuncionario(UUID idFuncionario, FuncionarioRequest funcionario) {
+        Optional<FuncionarioResponse> funcionarioResponse = funcionarioService.atualizaFuncionario(idFuncionario,funcionario);
+        return funcionarioResponse;
+    }
+
+
 }
