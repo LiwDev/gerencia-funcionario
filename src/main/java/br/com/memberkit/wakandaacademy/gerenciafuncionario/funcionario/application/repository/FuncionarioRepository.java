@@ -10,7 +10,9 @@ import java.util.UUID;
 public interface FuncionarioRepository {
     Funcionario salva(Funcionario funcionario);
 
-    Optional<Funcionario> buscaFuncionarioPorId(UUID id, Funcionario funcionario);
+    Optional<Funcionario> buscaFuncionarioPorId(UUID id);
 
-    List<Funcionario> buscaFuncionario(Funcionario funcionario);
+    List<Funcionario> buscaFuncionario();
+
+    void atualizaFuncionario(UUID idFuncionario,FuncionarioResponse funcionario);
 }

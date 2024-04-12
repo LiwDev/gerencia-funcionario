@@ -11,7 +11,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@Getter
+@Data
 @Document(collection = "Funcionario")
 
 public class Funcionario {
@@ -21,7 +21,7 @@ public class Funcionario {
     @NotBlank
     @Size(message = "Campo nome do funcionario não pode estar vazio", max = 255, min = 3)
     private String nome;
-    private String Designacao;
+    private String designacao;
     private String telefone;
     @NotBlank
     @Size(message = "Campo endereco do funcionario não pode estar vazio", max = 255, min = 3)
@@ -30,7 +30,7 @@ public class Funcionario {
     public Funcionario(FuncionarioRequest funcionarioRequest) {
         this.idFuncionario = UUID.randomUUID();
         this.nome = funcionarioRequest.getNome();
-        Designacao = funcionarioRequest.getDesignacao();
+        designacao = funcionarioRequest.getDesignacao();
         this.telefone = funcionarioRequest.getTelefone();
         this.endereco = funcionarioRequest.getEndereco();
     }

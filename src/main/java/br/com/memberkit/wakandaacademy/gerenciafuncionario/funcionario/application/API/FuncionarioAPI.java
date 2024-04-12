@@ -17,9 +17,13 @@ public interface FuncionarioAPI {
     Funcionario postNovoFuncionario(@RequestBody @Valid FuncionarioRequest funcionarioRequest);
     @GetMapping("/lista-funcionario/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    Optional<Funcionario> getFuncionarioPorId(@Valid @PathVariable("id") UUID id , @RequestParam(required = false) Funcionario funcionario);
+    Optional<Funcionario> getFuncionarioPorId(@Valid @PathVariable("id") UUID id);
 
     @GetMapping("/lista-funcionario")
     @ResponseStatus(code = HttpStatus.OK)
-    List<Funcionario> buscaFuncionario(@RequestParam(required = false) Funcionario funcionario);
+    List<Funcionario> buscaFuncionario();
+
+    @PatchMapping("atualiza-funcionario/{idFuncionario}")
+    @ResponseStatus(code = HttpStatus.OK)
+    Optional<FuncionarioResponse> atualizaFuncionario(@PathVariable("idFuncionario") UUID idFuncionario, @RequestBody FuncionarioRequest funcionario);
 }

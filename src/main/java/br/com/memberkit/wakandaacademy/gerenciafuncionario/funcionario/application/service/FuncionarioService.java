@@ -11,7 +11,9 @@ import java.util.UUID;
 public interface FuncionarioService {
     Funcionario criaNovoFuncionario(FuncionarioRequest funcionarioRequest);
 
-    Optional<Funcionario> buscaFuncionarioPorId(UUID id, Funcionario funcionario);
+    Optional<Funcionario> buscaFuncionarioPorId(UUID id);
 
-    List<Funcionario> buscaFuncionario(Funcionario funcionario);
+    List<Funcionario> buscaFuncionario( );
+
+    Optional<FuncionarioResponse> atualizaFuncionario(UUID idFuncionario, FuncionarioRequest funcionario);
 }
