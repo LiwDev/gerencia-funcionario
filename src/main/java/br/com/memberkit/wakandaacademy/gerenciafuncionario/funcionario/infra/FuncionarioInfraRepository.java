@@ -16,8 +16,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Log4j2
 @Repository
@@ -59,36 +61,9 @@ public class FuncionarioInfraRepository implements FuncionarioRepository {
     public void atualizaFuncionario(UUID idFuncionario, FuncionarioResponse funcionario) {
         log.info("[incia] - -FuncionarioSpringMongoDBRepository - atualizaFuncionario");
         try {
-            log.info("[incia] - -FuncionarioSpringMongoDBRepository - atualizaFuncionario");
-            Funcionario existingFuncionario = funcionarioSpringMongoDBRepository.findById(idFuncionario).get();
-            log.info("[existingFuncionario] - -funcionarioSpringMongoDBRepository - findById");
+            Funcionario filtraFuncionarioRequest = verificaRequest(idFuncionario,funcionario);
 
-            if (funcionario.getNome() != null && !funcionario.getNome().isBlank()) {
-                existingFuncionario.setNome(funcionario.getNome());
-            }
-            if (funcionario.getTelefone() != null && !funcionario.getTelefone().isBlank()) {
-                existingFuncionario.setTelefone(funcionario.getTelefone());
-            }
-            if (funcionario.getDesignacao() != null && !funcionario.getDesignacao().isBlank())
-                existingFuncionario.setDesignacao(funcionario.getDesignacao());
-            if (funcionario.getEndereco() != null) {
-                if (funcionario.getEndereco().getCep() != null && !funcionario.getEndereco().getCep().isBlank()) {
-                    existingFuncionario.getEndereco().setCep(funcionario.getEndereco().getCep());
-                }
-                if (funcionario.getEndereco().getCidade() != null && !funcionario.getEndereco().getCidade().isBlank()) {
-                    existingFuncionario.getEndereco().setCidade(funcionario.getEndereco().getCidade());
-                }
-                if (funcionario.getEndereco().getRua() != null && !funcionario.getEndereco().getRua().isBlank()) {
-                    existingFuncionario.getEndereco().setRua(funcionario.getEndereco().getRua());
-                }
-                if (funcionario.getEndereco().getEstado() != null && !funcionario.getEndereco().getEstado().isBlank()) {
-                    existingFuncionario.getEndereco().setEstado(funcionario.getEndereco().getEstado());
-                }
-            }
-            log.info("[existingFuncionario-encontrado] - -funcionarioSpringMongoDBRepository - findById ");
-
-
-            funcionarioSpringMongoDBRepository.save(existingFuncionario);
+            funcionarioSpringMongoDBRepository.save(filtraFuncionarioRequest);
             log.info("[finaliza] - -FuncionarioSpringMongoDBRepository - atualizaFuncionario");
         } catch
         (Exception exception) {
@@ -104,6 +79,40 @@ public class FuncionarioInfraRepository implements FuncionarioRepository {
         funcionarioSpringMongoDBRepository.delete(funcionario);
         log.info("[finaliza] - -FuncionarioSpringMongoDBRepository - deletaFuncionario");
     }
+public Funcionario verificaRequest(UUID idFuncionario ,FuncionarioResponse funcionario){
+    log.info("[incia] - -FuncionarioSpringMongoDBRepository - verificaRequest" + funcionario.getEndereco().getRua());
+    Funcionario existingFuncionario = funcionarioSpringMongoDBRepository.findById(idFuncionario).get();
 
+    Optional.ofNullable(funcionario.getNome())
+            .filter(nome -> !nome.isBlank())
+            .ifPresent(existingFuncionario::setNome);
+
+    Optional.ofNullable(funcionario.getTelefone())
+            .filter(telefone -> !telefone.isBlank())
+            .ifPresent(existingFuncionario::setTelefone);
+
+    Optional.ofNullable(funcionario.getDesignacao())
+            .filter(designacao -> !designacao.isBlank())
+            .ifPresent(existingFuncionario::setDesignacao);
+
+    Optional.ofNullable(funcionario.getEndereco())
+            .ifPresent(endereco -> {
+                if (endereco.getCep() != null && !endereco.getCep().isBlank()) {
+                    existingFuncionario.getEndereco().setCep(endereco.getCep());
+                }
+                if (endereco.getCidade() != null && !endereco.getCidade().isBlank()) {
+                    existingFuncionario.getEndereco().setCidade(endereco.getCidade());
+                }
+                if (endereco.getRua() != null && !endereco.getRua().isBlank()) {
+                    existingFuncionario.getEndereco().setRua(endereco.getRua());
+                }
+                if (endereco.getEstado() != null && !endereco.getEstado().isBlank()) {
+                    existingFuncionario.getEndereco().setEstado(endereco.getEstado());
+                }
+            });
+    log.info("[finaliza] - -funcionarioSpringMongoDBRepository - verificaRequest");
+    return existingFuncionario;
+
+}
 
 }
