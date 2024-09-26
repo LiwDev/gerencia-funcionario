@@ -3,6 +3,7 @@ package br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.infra;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.application.API.FuncionarioRequest;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.application.API.FuncionarioResponse;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.application.repository.FuncionarioRepository;
+import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.domain.Endereco;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.domain.Funcionario;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.handler.ApiException;
 import lombok.RequiredArgsConstructor;
@@ -60,15 +61,11 @@ public class FuncionarioInfraRepository implements FuncionarioRepository {
     @Override
     public void atualizaFuncionario(UUID idFuncionario, FuncionarioResponse funcionario) {
         log.info("[incia] - -FuncionarioSpringMongoDBRepository - atualizaFuncionario");
-        try {
+
             Funcionario filtraFuncionarioRequest = verificaRequest(idFuncionario,funcionario);
 
             funcionarioSpringMongoDBRepository.save(filtraFuncionarioRequest);
             log.info("[finaliza] - -FuncionarioSpringMongoDBRepository - atualizaFuncionario");
-        } catch
-        (Exception exception) {
-            throw ApiException.build(HttpStatus.BAD_REQUEST, "error ao atualizar funcionario", exception);
-        }
 
     }
 
@@ -80,7 +77,7 @@ public class FuncionarioInfraRepository implements FuncionarioRepository {
         log.info("[finaliza] - -FuncionarioSpringMongoDBRepository - deletaFuncionario");
     }
 public Funcionario verificaRequest(UUID idFuncionario ,FuncionarioResponse funcionario){
-    log.info("[incia] - -FuncionarioSpringMongoDBRepository - verificaRequest" + funcionario.getEndereco().getRua());
+    log.info("[incia] - -FuncionarioSpringMongoDBRepository - verificaRequest");
     Funcionario existingFuncionario = funcionarioSpringMongoDBRepository.findById(idFuncionario).get();
 
     Optional.ofNullable(funcionario.getNome())

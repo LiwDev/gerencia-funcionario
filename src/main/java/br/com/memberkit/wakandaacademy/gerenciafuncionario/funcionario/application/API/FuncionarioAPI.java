@@ -25,7 +25,7 @@ public interface FuncionarioAPI {
     List<Funcionario> buscaFuncionario();
 
     @PatchMapping("atualiza-funcionario/{idFuncionario}")
-    @ResponseStatus(code = HttpStatus.OK)
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     Optional<FuncionarioResponse> atualizaFuncionario(@PathVariable("idFuncionario") UUID idFuncionario, @RequestBody FuncionarioRequest funcionario);
 
     @DeleteMapping("/deleta-funcionario/{idFuncionario}")
