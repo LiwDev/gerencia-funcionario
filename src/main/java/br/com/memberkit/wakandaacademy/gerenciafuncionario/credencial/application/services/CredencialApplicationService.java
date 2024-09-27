@@ -22,9 +22,9 @@ log.info("[Inicia] - CredencialApplicationService - createNewCredencial");
     }
 
     @Override
-    public Credencial searchCredentialToUser(String user) {
+    public Credencial searchCredentialToUser(String usuario) {
         log.info("[Inicia] - CredencialApplicationService - searchCredentialToUser");
-        Credencial credencial = credencialRepository.buscaCredencialPorUsuario(user);
+        Credencial credencial = credencialRepository.searchCredentialToUser(usuario);
         log.info("[finaliza] - CredencialApplicationService - searchCredentialToUser");
         return credencial;
     }

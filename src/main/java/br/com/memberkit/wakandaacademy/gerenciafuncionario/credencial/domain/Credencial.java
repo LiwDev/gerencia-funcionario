@@ -18,7 +18,6 @@ import java.util.Collection;
 @Getter
 public class Credencial implements UserDetails {
     @MongoId(targetType = FieldType.STRING)
-
     private String user;
     @NotNull
     @Size(max = 60)
