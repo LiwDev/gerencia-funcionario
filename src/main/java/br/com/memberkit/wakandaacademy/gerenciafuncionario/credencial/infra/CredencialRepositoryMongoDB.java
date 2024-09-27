@@ -6,7 +6,10 @@ import br.com.memberkit.wakandaacademy.gerenciafuncionario.handler.ApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Repository;
 
+
+@Repository
 @Log4j2
 @RequiredArgsConstructor
 public class CredencialRepositoryMongoDB implements CredencialRepository {
@@ -14,14 +17,14 @@ public class CredencialRepositoryMongoDB implements CredencialRepository {
     @Override
     public Credencial salvaCredencial(Credencial credencial) {
        log.info("[Inicia] CredencialRepositoryMongoDB- salvaCredencial ");
-credencialMongoSpringRepository.save(credencial);
+        credencialMongoSpringRepository.save(credencial);
         log.info("[finaliza] CredencialRepositoryMongoDB- salvaCredencial ");
 
         return credencial;
     }
 
     @Override
-    public Credencial buscaCredencialPorUsuario(String usuario) {
+    public Credencial searchCredentialToUser(String usuario) {
         log.info("[Inicia] CredencialRepositoryMongoDB- buscaCredencialPorUsuario ");
         var credencial = credencialMongoSpringRepository.findByUsuario(usuario).orElseThrow(()-> ApiException.build(HttpStatus.NOT_FOUND,"Credencial não encontrada para esse usuario"));
         log.info("[finaliza] CredencialRepositoryMongoDB- buscaCredencialPorUsuario ");
