@@ -10,8 +10,6 @@ import lombok.Value;
 public class FuncionarioRequest {
 
     private String nome;
-    private String email;
-    private final String senha;
     private StatusFuncionario statusFuncionario;
     private String designacao;
     private String telefone;
