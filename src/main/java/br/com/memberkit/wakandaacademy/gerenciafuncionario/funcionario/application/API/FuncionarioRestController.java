@@ -1,8 +1,10 @@
 package br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.application.API;
 
+import br.com.memberkit.wakandaacademy.gerenciafuncionario.config.security.application.services.TokenService;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.application.service.FuncionarioApplicationService;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.application.service.FuncionarioService;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.domain.Funcionario;
+import br.com.memberkit.wakandaacademy.gerenciafuncionario.usuario.domain.Users;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,10 +20,12 @@ public class FuncionarioRestController implements FuncionarioAPI {
 
 
     private final FuncionarioService funcionarioService;
+  private TokenService tokenService;
 
     @Override
     public Funcionario postNovoFuncionario(FuncionarioRequest funcionarioRequest) {
         log.info("[incia] - -FuncionarioRestController - postNovoFuncionario");
+
         Funcionario criaNovoFuncionario = funcionarioService.criaNovoFuncionario(funcionarioRequest);
         log.info("[finaliza] - -FuncionarioRestController - postNovoFuncionario");
         return criaNovoFuncionario;
@@ -37,7 +41,7 @@ public class FuncionarioRestController implements FuncionarioAPI {
 
     @Override
     public List<Funcionario> buscaFuncionario() {
-        log.info("[incia] - -FuncionarioRestController - getFuncionario");
+        log.info("[incia] - -FuncionarioRestController - getFuncionario/n/n/n/n/n/n");
         List<Funcionario> listaFuncionario = funcionarioService.buscaFuncionario();
         log.info("[finaliza] - -FuncionarioRestController - getFuncionario");
         return listaFuncionario;

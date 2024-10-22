@@ -31,7 +31,12 @@ public class UsersInfraRepository implements UsersRepository {
     @Override
     public UserDetails findByLogin(String login) {
         log.info("[inicia] UsersInfraRepository - fyndByLogin");
-        var usuario = usersSpringMongoDbRepository.findByLogin(login);
+        UserDetails usuario = null;
+        try {
+            usuario = usersSpringMongoDbRepository.findByLogin(login);
+        } catch (NullPointerException e) {
+            throw ApiException.build(HttpStatus.NO_CONTENT,"Usuario nao encontrado",e);
+        }
         log.info("[inicia] UsersInfraRepository - fyndByLogin");
         return usuario;
     }

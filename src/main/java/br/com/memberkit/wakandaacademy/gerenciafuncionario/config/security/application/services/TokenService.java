@@ -7,6 +7,9 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,7 +19,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 @Service
-
+@Log4j2
 public class TokenService {
 
     @Value("${gerencia-funcionario.security.token.secret}")
@@ -24,35 +27,43 @@ public class TokenService {
     @Value("${gerencia-funcionario.security.token.api}")
     private String apiName;
 
-    public String generateToken(Users users){
-        try{
+
+
+    public String generateToken(Users users) {
+        try {
+
             Algorithm algorithm = Algorithm.HMAC256(secret);
-        String token = JWT.create()
-                .withIssuer(apiName)
-                .withSubject(users.getLogin())
-                .withExpiresAt(getExpiraçaoDate())
-                .sign(algorithm);
-        return  token;}
-        catch (JWTCreationException creationException){
-            throw  ApiException.build(HttpStatus.BAD_REQUEST,"Falha ao criar token", creationException);
+
+            String token = JWT.create()
+                    .withIssuer(apiName)
+                    .withSubject(users.getLogin())
+                    .withExpiresAt(getExpiraçaoDate())
+                    .sign(algorithm);
+
+            return token;
+        } catch (JWTCreationException creationException) {
+            throw ApiException.build(HttpStatus.BAD_REQUEST, "Falha ao criar token", creationException);
         }
     }
-    public  String ValidetToken(String token){
-        try{
+
+    public String ValidetToken(String token) {
+        try {
+            log.info(secret);
             Algorithm algorithm = Algorithm.HMAC256(secret);
-       return JWT.require(algorithm)
-               .withIssuer(apiName)
-               .build()
-               .verify(token)
-               .getSubject();}
-        catch (JWTVerificationException jwtVerificationException){
-            throw ApiException.build(HttpStatus.BAD_REQUEST,"Token Invalido",jwtVerificationException);
+            return JWT.require(algorithm)
+                    .withIssuer(apiName)
+                    .build()
+                    .verify(token)
+                    .getSubject();
+        } catch (JWTVerificationException jwtVerificationException) {
+            throw ApiException.build(HttpStatus.BAD_REQUEST, "Token Invalido", jwtVerificationException);
         }
 
 
     }
-    public Instant getExpiraçaoDate(){
-        return LocalDateTime.now().plusHours(2).toInstant( ZoneOffset.of("-03.00"));
+
+    public Instant getExpiraçaoDate() {
+        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
 
     }
 

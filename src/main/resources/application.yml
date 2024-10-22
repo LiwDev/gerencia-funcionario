@@ -17,6 +17,6 @@ springdoc:
 gerencia-funcionario:
   security:
     token:
-      api: ${apiName:"gerencia-funcionario"}
-      secret: ${SECRET:"semente_secret"}
+      api: ${apiName:gerencia-funcionario}
+      secret: ${SECRET:semente_secret}
 

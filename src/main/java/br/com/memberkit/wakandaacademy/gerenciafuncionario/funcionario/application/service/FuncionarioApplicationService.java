@@ -5,10 +5,12 @@ import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.applicati
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.application.repository.FuncionarioRepository;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.funcionario.domain.Funcionario;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.handler.ApiException;
+import br.com.memberkit.wakandaacademy.gerenciafuncionario.usuario.application.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.UUID;
 @Log4j2
 public class FuncionarioApplicationService implements FuncionarioService{
     private final FuncionarioRepository funcionarioRepository;
+
 
     @Override
     public Funcionario criaNovoFuncionario(FuncionarioRequest funcionarioRequest) {
