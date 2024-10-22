@@ -1,5 +1,6 @@
 package br.com.memberkit.wakandaacademy.gerenciafuncionario.autenticacao.application.api;
 
+import br.com.memberkit.wakandaacademy.gerenciafuncionario.config.security.application.services.TokenService;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.usuario.application.service.UserService;
 import br.com.memberkit.wakandaacademy.gerenciafuncionario.usuario.domain.Users;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController implements AuthenticationApi{
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
+    private final TokenService tokenService;
     @Override
     public ResponseEntity login(AuthenticationRequest authenticationRequest) {
         var login = new UsernamePasswordAuthenticationToken(authenticationRequest.getLogin(),authenticationRequest.getSenha());
         var auth = authenticationManager.authenticate(login);
-        return ResponseEntity.ok().build();
+        var token = tokenService.generateToken((Users) auth.getPrincipal());
+        return ResponseEntity.ok(token);
     }
 
     @Override

@@ -21,28 +21,30 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 
 public class SecurityConfiguration {
-@Autowired
-FiltroToken filtroToken;
+    @Autowired
+    FiltroToken filtroToken;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorazite -> authorazite.
-                        requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/public/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/funcionario").hasRole("ADMIN")
-                        .anyRequest().authenticated())
                 .addFilterBefore(filtroToken, UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(authorazite -> authorazite.
+                        requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/public/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/register").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/funcionario/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/funcionario/**").hasRole("USER")
+                        .anyRequest().authenticated())
                 .build();
 
     }
-@Bean
-public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
 
-}
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

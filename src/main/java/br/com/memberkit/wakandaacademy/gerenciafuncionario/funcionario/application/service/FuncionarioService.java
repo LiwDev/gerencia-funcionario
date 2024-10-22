@@ -13,7 +13,7 @@ public interface FuncionarioService {
 
     Optional<Funcionario> buscaFuncionarioPorId(UUID id);
 
-    List<Funcionario> buscaFuncionario( );
+    List<Funcionario> buscaFuncionario();
 
     Optional<FuncionarioResponse> atualizaFuncionario(UUID idFuncionario, FuncionarioRequest funcionario);
 
