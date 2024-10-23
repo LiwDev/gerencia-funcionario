@@ -1,8 +1,8 @@
 # Sobre o Projeto ✂️
 Este é projeto simples para criação de uma API , Gerencia de funcionario , 
 na qual quero testar meus conhecimentos utilizando o framework Spring Boot,
-no primeiro momento estou criando 
-com o a base de dados mongo DB.
+de momento, estou criando 
+com a base de dados mongo DB.
 # Requisitos
 
 ## Entidade 👽
@@ -12,7 +12,7 @@ com o a base de dados mongo DB.
  4. Salário do funcionário
  5. Número de telefone do funcionário
  6. Endereço do funcionário
-### API 🔠
+ ### API 🔠
  1. Adicionar novos funcionários
  2. Obter detalhes dos funcionários existentes
  3. Atualizar detalhes dos funcionários existentes
