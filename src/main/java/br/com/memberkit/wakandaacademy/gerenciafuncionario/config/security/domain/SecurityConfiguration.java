@@ -11,11 +11,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 @Configuration
 @EnableWebSecurity
@@ -24,9 +27,11 @@ public class SecurityConfiguration {
     @Autowired
     FiltroToken filtroToken;
 
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.csrf(csrf -> csrf.disable())
+        return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(filtroToken, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authorazite -> authorazite.
@@ -39,6 +44,15 @@ public class SecurityConfiguration {
                 .build();
 
     }
+
+//    @Bean
+//    public HttpFirewall httpFirewall() {
+//        StrictHttpFirewall firewall = new StrictHttpFirewall();
+//        firewall.setAllowedHeaderNames((header) -> true);
+//        firewall.setAllowedHeaderValues((header) -> true);
+//        firewall.setAllowedParameterNames((parameter) -> true);
+//        return firewall;
+//    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
