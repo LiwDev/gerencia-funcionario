@@ -26,7 +26,7 @@ public class FuncionarioRestController implements FuncionarioAPI {
     public Funcionario postNovoFuncionario(FuncionarioRequest funcionarioRequest) {
         log.info("[incia] - -FuncionarioRestController - postNovoFuncionario");
 
-        Funcionario criaNovoFuncionario = funcionarioService.criaNovoFuncionario(funcionarioRequest);
+        Funcionario criaNovoFuncionario = funcionarioService.criaNovoFuncionario(new Funcionario(funcionarioRequest));
         log.info("[finaliza] - -FuncionarioRestController - postNovoFuncionario");
         return criaNovoFuncionario;
     }

@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface FuncionarioService {
-    Funcionario criaNovoFuncionario(FuncionarioRequest funcionarioRequest);
+    Funcionario criaNovoFuncionario(Funcionario funcionario);
 
     Optional<Funcionario> buscaFuncionarioPorId(UUID id);
 
